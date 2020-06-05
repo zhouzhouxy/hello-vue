@@ -13,6 +13,10 @@ Vue.prototype.axios=axios;
 
 import App from './App'
 
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+var instance = axios.create({}) // 这样创建出来的 只需要：
+instance.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
 //路由跳转前
 router.beforeEach((to,from,next)=>{
     let isLogin=sessionStorage.getItem('isLogin');
