@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VueRouter from 'vue-router'
 import router from './router'
 import store from './store'
+import $ from 'jquery'
 
 // 导入 ElementUI
 import ElementUI from 'element-ui'

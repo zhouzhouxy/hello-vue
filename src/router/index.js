@@ -64,6 +64,38 @@ import ProductionRegister from '@/views/process/innerProductionManager/productio
 import ProductionRegisterCheck from '@/views/process/innerProductionManager/productionRegisterCheck'
 import ProductionQuery from '@/views/process/innerProductionManager/productionQuery'
 
+//-----------------------------------------------------------------------
+//----------------------------------库存管理-------------------------------------
+//-----------------------------------------------------------------------
+import MakeSecurityStockConfig  from '../views/stockControl/securityStockConfigManager/makeSecurityStock'
+import AddSecurityStock  from '../views/stockControl/securityStockConfigManager/addSecurityStock'
+import StockCheck from '../views/stockControl/securityStockConfigManager/stockCheck'
+import CheckSecurityStock from '../views/stockControl/securityStockConfigManager/checkSecurityStock'
+import StockQuery from '../views/stockControl/securityStockConfigManager/stockQuery'
+import StockChange from '../views/stockControl/securityStockConfigManager/stockChange'
+import ChangeStock from '../views/stockControl/securityStockConfigManager/changeStock'
+//入库申请管理
+import EntryRegister from '../views/stockControl/entryStcok/entryRegister'
+import EntryRegisterCheck from '../views/stockControl/entryStcok/entryRegisterCheck'
+import EntryQuery from '../views/stockControl/entryStcok/entryQuery'
+import CheckEntry from '../views/stockControl/entryStcok/checkEntry'
+import ViewEntry from '../views/stockControl/entryStcok/viewEntry'
+
+//出库申请管理
+import OutRegister from '../views/stockControl/outStock/outRegister'
+import OutRegisterCheck from '../views/stockControl/outStock/outRegisterCheck'
+import CheckOut from '../views/stockControl/outStock/checkOut'
+import OutQuery from '../views/stockControl/outStock/outQuery'
+import ViewOut from '../views/stockControl/outStock/viewOut'
+
+//出入库调度管理
+import MakeEntryStock from '../views/stockControl/oeDispatcher/makeEntryStock'
+import MakeOutStock from '../views/stockControl/oeDispatcher/makeOutStock'
+import EntryDispatcher from '../views/stockControl/oeDispatcher/entryDispatcher'
+import OutDispatcher from '../views/stockControl/oeDispatcher/outDispatcher'
+
+
+
 import test from '@/views/Test'
 
 
@@ -135,6 +167,34 @@ export default new Router({
         {path:'/pm/pg',name:'ProductionRegister',component:ProductionRegister},
         {path:'/pm/pgc',name:'ProductionRegisterCheck',component:ProductionRegisterCheck},
         {path:'/pm/pq',name:'ProductionQuery',component:ProductionQuery},
+        //-------------------------------------------------------------------------
+        //------------------------------库存管理-------------------------------------------
+        //-------------------------------------------------------------------------
+        //安全库存配置管理
+        {path:'/stock/ssc',name:'MakeSecurityStockConfig',component:MakeSecurityStockConfig},
+        {path:'/stock/add/:id',name:'AddSecurityStock',component:AddSecurityStock,props:true},
+        {path:'/stock/sc',name:'StockCheck',component:StockCheck},
+        {path:'/stock/css/:id',name:'CheckSecurityStock',component:CheckSecurityStock,props:true},
+        {path:'/stock/sq',name:'StockQuery',component:StockQuery},
+        {path:'/stock/schange',name:'StockChange',component:StockChange},
+        {path:'/stock/cs/:id',name:'ChangeStock',component:ChangeStock,props:true},
+        //入库申请管理
+        {path:'/entry/er',name:'EntryRegister',component:EntryRegister},
+        {path:'/entry/erc',name:'EntryRegisterCheck',component:EntryRegisterCheck},
+        {path:'/entry/eq',name:'EntryQuery',component:EntryQuery},
+        {path:'/entry/ce/:id',name:'CheckEntry',component:CheckEntry,props:true},
+        {path:'/entry/ve/:id',name:'ViewEntry',component:ViewEntry,props:true},
+        //出入库调度管理
+        {path:'/oe/mes',name:'MakeEntryStock',component:MakeEntryStock},
+        {path:'/oe/mos',name:'MakeOutStock',component:MakeOutStock},
+        {path:'/oe/ed/:id',name:'EntryDispatcher',component:EntryDispatcher,props:true},
+        {path:'/oe/od/:id',name:'OutDispatcher',component:OutDispatcher,props:true},
+        //出库申请管理
+        {path:'/out/or',name:'OutRegister',component:OutRegister},
+        {path:'/out/orc',name:'OutRegisterCheck',component:OutRegisterCheck},
+        {path:'/out/oq',name:'OutQuery',component:OutQuery},
+        {path:'/out/co/:id',name:'CheckOut',component:CheckOut,props:true},
+        {path:'/out/vo/:id',name:'ViewOut',component:ViewOut,props:true},
 
       ]
     },

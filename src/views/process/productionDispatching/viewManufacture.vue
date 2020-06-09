@@ -208,6 +208,7 @@
             }
             this.manufacture.checkTime=this.checkTime;
             this.manufacture.checker=this.checker;
+            console.log(this.manufacture)
             //提交
             this.axios.put('http://127.0.0.1:1217/enxin/m-manufacture/upManufacture',this.manufacture,
               {headers:{'Content-Type':'application/json'}})
@@ -245,7 +246,6 @@
         },
       },
         created(){
-
              /*this.axios.get('http://127.0.0.1:1217/enxin/m-manufacture/queryDetailById?id='+this.id)
                .then((response)=>{
                  this.manufacture=response.data.mManufacture;

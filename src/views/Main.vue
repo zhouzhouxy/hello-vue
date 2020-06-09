@@ -1,14 +1,14 @@
 <template>
-      <el-container style="height: 100%; border: 1px solid #eee">
+      <el-container style="height: 1200px; border: 1px solid #eee;">
         <el-aside width="200px">
-          <el-menu>
+          <el-menu class="men">
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-setting"></i>产品设计</template>
               <el-submenu index="3-1">
                 <template slot="title">产品档案管理</template>
                 <el-menu-item-group>
                   <el-menu-item index="3-1-1">
-                    <router-link  to="/product/pr">产品档案登记</router-link>
+                    <router-link  to="/product/pr" >产品档案登记</router-link>
                   </el-menu-item>
                   <el-menu-item index="3-1-2">
                     <router-link to="/product/prc">产品档案登记复核</router-link>
@@ -132,11 +132,70 @@
                 </el-menu-item-group>
               </el-submenu>
             </el-submenu>
+            <el-submenu index="5">
+              <template slot="title"><i class="el-icon-coin">库存管理</i></template>
+              <el-submenu index="5-1">
+                <template slot="title">安全配置管理</template>
+                <el-menu-item-group>
+                  <el-menu-item index="5-1-1">
+                    <router-link  to="/stock/ssc">制定安全库存配置</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-1-2">
+                    <router-link to="/stock/sc">安全库存配置单复核</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-1-3">
+                    <router-link to="/stock/sq">安全库存配置单查询</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-1-4">
+                    <router-link to="/stock/schange">安全库存配置单变更</router-link>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+              <el-submenu index="5-2">
+                <template slot="title">入库申请管理</template>
+                <el-menu-item-group>
+                  <el-menu-item index="5-2-1">
+                    <router-link  to="/entry/er">入库申请登记</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-2-2">
+                    <router-link to="/entry/erc">入库申请登记审核</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-2-3">
+                    <router-link to="/entry/eq">入库申请查询</router-link>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+              <el-submenu index="5-3">
+                <template slot="title">出库申请管理</template>
+                <el-menu-item-group>
+                  <el-menu-item index="5-3-1">
+                    <router-link  to="/out/or">出库申请登记</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-3-2">
+                    <router-link to="/out/orc">出库申请登记审核</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-3-3">
+                    <router-link to="/out/oq">出库申请查询</router-link>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+              <el-submenu index="5-4">
+                <template slot="title">出入库调度管理</template>
+                <el-menu-item-group>
+                  <el-menu-item index="5-3-1">
+                    <router-link  to="/oe/mes">制定入库单</router-link>
+                  </el-menu-item>
+                  <el-menu-item index="5-3-2">
+                    <router-link to="/oe/mos">制定出库单</router-link>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+            </el-submenu>
           </el-menu>
         </el-aside>
-
         <el-container>
-          <el-header style="text-align:right;font-size:12px">
+          <el-header style="text-align:right;font-size:12px;background-color: #0a76a4">
+
             <el-dropdown>
               <i class="el-icon-setting" style="margin-right:15px"></i>
               <el-dropdown-menu slot="dropdown">
@@ -147,7 +206,7 @@
 <!--            <span>{{$route.params.username}}</span> 路由取值方法-->
             <span>{{$store.getters.getUser.username}}</span>
           </el-header>
-          <el-main>
+          <el-main style="background-color: #E4E7ED">
             <router-view/>
           </el-main>
         </el-container>
@@ -161,5 +220,7 @@
 </script>
 
 <style scoped>
-
+    .men >>> .router-link-active {
+    text-decoration: none;
+  }
 </style>

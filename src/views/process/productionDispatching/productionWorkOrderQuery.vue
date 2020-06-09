@@ -133,16 +133,20 @@
       methods:{
 
         handleCurrentChange(vale){
-
+            this.condition.pageNum=vale;
+            this.loadTables();
+        },
+        loadTables(){
+          this.axios.post("http://127.0.0.1:1217/enxin/m-manufacture/queryByCondition",this.condition,
+            {headers:{'Content-Type':'application/json'}})
+            .then((response)=>{
+              this.manufactureList=response.data.list;
+              this.total=response.data.total;
+            })
         },
         onSubmit(){
-            this.axios.post("http://127.0.0.1:1217/enxin/m-manufacture/queryByCondition",this.condition,
-              {headers:{'Content-Type':'application/json'}})
-              .then((response)=>{
-                    this.manufactureList=response.data.list;
-                    this.total=response.data.total;
-                    this.vis=false;
-              })
+            this.loadTables();
+            this.vis=false;
         }
       }
     }

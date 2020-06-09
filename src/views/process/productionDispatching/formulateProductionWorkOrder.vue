@@ -373,7 +373,6 @@
           },
           //点击提交
           confirm() {
-            console.log(this.manufacture)
             this.axios.put("http://127.0.0.1:1217/enxin/m-manufacture/addManufacture",
             this.manufacture,
               {headers:{'Content-Type':'application/json'}})
