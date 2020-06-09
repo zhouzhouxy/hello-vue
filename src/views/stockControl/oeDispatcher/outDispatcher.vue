@@ -59,12 +59,13 @@
         <el-table-column
           label="已出库件数">
           <template slot-scope="scope">
-            <span v-if="scope.row.paidAmountSum!=null">{{scope.row.paidAmountSum}}</span>
+            <span v-if="scope.row.paidAmount!=null">{{scope.row.paidAmount}}</span>
             <span>0.0</span>
           </template>
         </el-table-column>
         <el-table-column
           label="存放地址集合">
+
         </el-table-column>
         <el-table-column
           label="调度">
@@ -86,7 +87,7 @@
           <span>已出库总件数:</span>
         </el-col>
         <el-col :span="4">
-          <span>0.00</span>
+          <span>{{sPay.paidAmountSum==null?"0.00":sPay.paidAmountSum}}</span>
         </el-col>
       </el-row>
     </div>
@@ -221,6 +222,7 @@
             });
             return;
           }
+          // console.log(this.outAmount+"--->"+this.sPayDetails.id+"--->"+this.sCell.id)
          this.axios.get("http://127.0.0.1:1217/enxin/s-cell/out-dispatcher",
             {params:{outAmount:this.outAmount,sdId:this.sPayDetails.id,sCellId:this.sCell.id}})
             .then((response)=>{
@@ -272,12 +274,12 @@
             this.sPay=response.data.sPay;
             this.list=response.data.list;
             //循环判断是否所有的入库明细都已经完成调度
-         /*   let flag=false;
-            for(let i=0;i<this.gatherList.length;i++){
-              if(this.gatherList[i]['gatherTag']=="1"){
-                flag=true;
-              }
+            let flag=false;
+            if(this.sPay.payTag=="2"){
+              //表示都已经被调度返回页面
+              this.$router.push('/oe/mos');
             }
+            /*
             if(!flag){
               //表示所有的产品都已经通过
               //所有修改入库表表示已经调度
