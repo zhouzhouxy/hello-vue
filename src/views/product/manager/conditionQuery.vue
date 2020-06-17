@@ -44,6 +44,8 @@
     </div>
     <div v-show="!see">
       <el-table :data="list"
+                :row-class-name="tableRowClassName"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 style="width:100%">
         <el-table-column
           prop="productId"
@@ -74,13 +76,13 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)">查看</el-button>
+              @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)" type="success">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         background
-        :page-size="5"
+        :page-size="10"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="total">
@@ -209,7 +211,7 @@
               date1: '',
               date2: '',
               pageNum:1,
-              pageSize:5
+              pageSize:10
             },
             total:0,
             DFile: {
@@ -244,6 +246,15 @@
           }
       },
       methods: {
+        tableRowClassName({row, rowIndex}) {
+          console.log(rowIndex%2==0)
+          if (rowIndex === 1) {
+            return 'warning-row';
+          } else if (rowIndex === 3) {
+            return 'success-row';
+          }
+          return '';
+        },
         //点击审核，查询当前的编号的DFile
         handleEdit(v1, v2, v3) {
           this.axios
@@ -357,7 +368,13 @@
   .el-table .warning-row {
     background: oldlace;
   }
+  .el-table .warning-row {
+    background: oldlace;
+  }
 
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
   .el-table .success-row {
     background: #f0f9eb;
   }

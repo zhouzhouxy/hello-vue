@@ -3,12 +3,11 @@
     <el-row :gutter="24">
         <el-col :span="10" :offset="16">
             <el-button-group>
-                <el-button @click="dialogVisible=!dialogVisible" v-if="show">添加产品</el-button>
-                <el-button @click="remove()" v-if="show">删除产品</el-button>
-                <el-button @click="preview()" v-if="show">预览</el-button>
-                <el-button v-if="show">返回</el-button>
-                <el-button v-if="!show" @click="shows()">返回</el-button>
-                <el-button v-if="!show" @click="commit()">确认</el-button>
+                <el-button type="primary" @click="dialogVisible=!dialogVisible" v-if="show">添加产品</el-button>
+                <el-button type="danger" @click="remove()" v-if="show">删除产品</el-button>
+                <el-button type="success" @click="preview()" v-if="show">预览</el-button>
+                <el-button type="warning" v-if="!show" @click="shows()">返回</el-button>
+                <el-button type="primary" v-if="!show" @click="commit()">确认</el-button>
             </el-button-group>
         </el-col>
     </el-row>

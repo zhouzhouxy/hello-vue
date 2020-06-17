@@ -3,12 +3,14 @@
     <el-row :gutter="20" class="group">
           <el-col :span="8" :offset="12">
               <el-button-group>
-                  <el-button @click="dialogVisible2=true" v-show="!vis">添加工序</el-button>
-                  <el-button @click="delProcedure"  v-show="!vis">删除工序</el-button>
-                  <el-button @click="preview">预览</el-button>
-                  <el-button @click="commit" v-show="vis">确认</el-button>
-                  <el-button>
-                    返回
+                  <el-button  type="primary" @click="dialogVisible2=true" v-show="!vis">   <i class="el-icon-plus"></i></el-button>
+                  <el-button  type="danger" @click="delProcedure"  v-show="!vis"><i class="el-icon-delete"></i></el-button>
+                  <el-button type="success" @click="preview">
+                    <i v-if="!vis" class="el-icon-search"></i>
+                    <i v-else class="el-icon-back"></i></el-button>
+                  <el-button type="primary" @click="commit" v-show="vis">确认</el-button>
+                  <el-button type="success" @click="back()">
+                    <i  class="el-icon-back"></i>
                   </el-button>
               </el-button-group>
           </el-col>
@@ -31,11 +33,12 @@
           <el-col :span="3" :offset="1">
             <span>设计人</span>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="4" class="inp">
             <el-input  type="text" v-model="designer" />
           </el-col>
         </div>
         <el-table :data="list"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   stripe
                   ref="multipleTable"
                   @selection-change="changeFun"
@@ -62,9 +65,10 @@
           <el-table-column
             label="工时数"   width="160px">
             <template slot-scope="scope">
-              <el-input-number size="mini" :min="1" v-model="scope.row.labourHourAmount"
+              <el-input-number  v-if="!vis"  size="mini" :min="1" v-model="scope.row.labourHourAmount"
                                @change="changeInput(scope.row)">
               </el-input-number>
+              <span v-else>{{scope.row.labourHourAmount}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="amountUnit"
@@ -76,7 +80,8 @@
           <el-table-column
                            label="单位工时成本小计(元)"   width="160px">
             <template slot-scope="scope">
-              <el-input v-model="scope.row.costPrice" size="mini"></el-input>
+              <el-input v-if="!vis" v-model="scope.row.costPrice" size="mini"></el-input>
+              <span v-else>{{scope.row.costPrice}}</span>
             </template>
           </el-table-column>
           <el-table-column prop="subtotal"
@@ -84,7 +89,7 @@
           </el-table-column>
         </el-table>
         <el-form-item label="登记人">
-          <el-col :span="4">
+          <el-col :span="4" class="inp">
             <el-input type="text"  v-model="DFile.register" />
           </el-col>
         </el-form-item>
@@ -105,6 +110,7 @@
       width="60%"
       :before-close="handleClose">
       <el-table :data="processList"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 style="width:100%">
         <el-table-column
           prop="procedureId"
@@ -203,6 +209,10 @@
       }
     },
     methods:{
+      //返回
+      back(){
+          this.$router.push('/process/mpd')
+      },
       //预览
       preview(){
           if(this.list.length==0){
@@ -225,7 +235,7 @@
              //计算工时成本小计
              this.list[i]['subtotal']=this.list[i]['labourHourAmount']*this.list[i]['costPrice'];
             //显示总成本
-            this.vis=true;
+            this.vis=!this.vis;
           }
       },
       changeInput(data){
@@ -358,23 +368,7 @@
     },
     beforeRouteEnter:(to,from,next)=>{
       next(vm => {
-        Date.prototype.Format = function (fmt) { // author: meizz
-          var o = {
-            "M+": this.getMonth() + 1, // 月份
-            "d+": this.getDate(), // 日
-            "h+": this.getHours(), // 小时
-            "m+": this.getMinutes(), // 分
-            "s+": this.getSeconds(), // 秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-            "S": this.getMilliseconds() // 毫秒
-          };
-          if (/(y+)/.test(fmt))
-            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-          for (var k in o)
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-          return fmt;
-        }
-        vm.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
       });
     },
     created(){
@@ -394,6 +388,23 @@
             //请求失败处理
             console.log(error)
           });
+      Date.prototype.Format = function (fmt) { // author: meizz
+        var o = {
+          "M+": this.getMonth() + 1, // 月份
+          "d+": this.getDate(), // 日
+          "h+": this.getHours(), // 小时
+          "m+": this.getMinutes(), // 分
+          "s+": this.getSeconds(), // 秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+          "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
+      this.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
     },
     computed:{
       firstKindId:function(){
@@ -449,6 +460,14 @@
   }
   .t1{
     margin-left: 20px;
+  }
+  .inp >>>  .el-input__inner{
+    border: none;
+    border-bottom: 1px solid gray;
+    /*margin-left: -40px;*/
+    height: 25px !important;
+    width: 85% !important;
+    background-color: lightgoldenrodyellow;
   }
 </style>
 

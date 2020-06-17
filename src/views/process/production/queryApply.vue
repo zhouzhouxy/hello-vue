@@ -3,7 +3,7 @@
     <h4 class="box-title">生产计划单</h4>
     <el-row :gutter="20">
         <el-col :span="4" :offset="15">
-            <el-button @click="ret()">返回</el-button>
+            <el-button type="warning" @click="ret()">返回</el-button>
         </el-col>
     </el-row>
     <el-row :gutter="20">
@@ -13,6 +13,7 @@
     </el-row>
     <!--表格-->
     <el-table :data="fileList"
+              :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
               stripe
               width="800px"
     >
@@ -84,7 +85,12 @@
 
 <style scoped>
   .box{
-
+    width:1217px;
+    margin:0px auto;
+    border:1px solid #0c0c0c;
+    padding: 35px;
+    border-radius:5px;
+    box-shadow:0 0 25px #091e25;
   }
 </style>
 

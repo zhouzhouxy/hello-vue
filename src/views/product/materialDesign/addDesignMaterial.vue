@@ -1,55 +1,64 @@
 <template>
   <div>
-  <el-form ref="DFile" :model="DFile" label-width="80px"   class="login-box">
+     <el-form ref="DFile" :model="DFile" label-width="80px"   class="login-box">
     <h4 class="login-title">物料组成设计单</h4>
-    <el-button
-      size="mini"
-      v-if="!vis"
-      @click="addMaterial()">
-      添加物料
-    </el-button>
-    <el-button
-      size="mini"
-      v-if="!vis"
-      @click="delMaterial()">
-      删除物料
-    </el-button>
-    <el-button
-      size="mini"
-      @click="viewTable()">
-      预览
-    </el-button>
-    <el-button
-      size="mini"
-      v-if="vis"
-      @click="commit()"
-    >
-      确认
-    </el-button>
-    <div>
-      <el-row :gutter="20">
-        <el-col :span="8">
-          <span class="t1">产品名称</span>
-          <span class="t1">{{DFile.productName}}</span>
+    <el-row :gutter="24">
+        <el-col :span="10" :offset="16">
+          <el-button-group>
+            <el-button
+              type="primary"
+              v-if="!vis"
+              @click="addMaterial()">
+              <i class="el-icon-plus"></i>
+            </el-button>
+            <el-button
+              type="danger"
+              v-if="!vis"
+              @click="delMaterial()">
+              <i class="el-icon-delete"></i>
+            </el-button>
+            <el-button
+              type="success"
+              @click="viewTable()">
+              <i v-if="!vis" class="el-icon-search"></i>
+              <i v-else class="el-icon-back"></i>
+            </el-button>
+            <el-button
+              type="primary"
+              v-if="vis"
+              @click="commit()"
+            >
+              确认
+            </el-button>
+          </el-button-group>
         </el-col>
-        <el-col :span="10" :offset="4">
-          <span class="t1">产品编号</span>
-          <span class="t1">{{DFile.productId}}</span>
-        </el-col>
-      </el-row>
+    </el-row>
 
-      <el-col :span="2">
-        <span>设计人</span>
+
+     <el-row :gutter="20">
+      <el-col :span="8">
+        <span class="t1">产品名称</span>
+        <span class="t1">{{DFile.productName}}</span>
       </el-col>
-      <el-col :span="2">
-          <el-input type="text" v-model="designer" />
+      <el-col :span="10" :offset="4">
+        <span class="t1">产品编号</span>
+        <span class="t1">{{DFile.productId}}</span>
       </el-col>
-    </div>
-    <el-table :data="list"
+    </el-row>
+<el-row :gutter="24">
+  <el-col :span="3">
+    <span style="margin-left: 18px">设计人</span>
+  </el-col>
+  <el-col :span="4" class="inp">
+    <el-input type="text" v-model="designer" />
+  </el-col>
+</el-row>
+
+     <el-table :data="list"
               stripe
               ref="multipleTable"
-              @selection-change="changeFun"
-              style="width:100%">
+              :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+              @selection-change="changeFun" >
       <el-table-column
         type="selection"
         width="55">
@@ -57,8 +66,7 @@
       <el-table-column
         prop="productId"
         label="产品编号"
-        width="120px">
-
+        width="180px">
       </el-table-column>
       <el-table-column prop="productName"
                        label="物料名称"
@@ -69,16 +77,16 @@
                        width="80px">
       </el-table-column>
       <el-table-column prop="productDescribe"
-                       label="描述"   width="80px">
+                       label="描述"   width="90px">
       </el-table-column>
-
-      <el-table-column
-                       label="数量" prop="amount"   width="160px">
-         <template slot-scope="scope">
-           <el-input-number size="mini" :min="1" v-model="scope.row.amount"
-                            @change="changeInput(scope.row)">
-           </el-input-number>
-         </template>
+      <el-table-column label="数量"
+                       width="160px">
+        <template slot-scope="scope">
+          <el-input-number size="mini" v-if="!vis" :min="1" v-model="scope.row.amount"
+                           @change="changeInput(scope.row)">
+          </el-input-number>
+          <span v-if="vis">{{scope.row.amount}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="amountUnit"
                        label="单位"   width="80px">
@@ -91,7 +99,7 @@
       </el-table-column>
     </el-table>
     <el-form-item label="登记人">
-      <el-col :span="2">
+      <el-col :span="2" class="inp">
         <el-input type="text"  v-model="DFile.register" />
       </el-col>
     </el-form-item>
@@ -99,7 +107,7 @@
     <span>{{registerTime}}</span>
     <br>
     <el-form-item label="设计要求">
-      <el-col :span="8">
+      <el-col :span="8" >
         <el-input type="textarea" v-model="moduleDescribe" :rows="2" ></el-input>
       </el-col>
     </el-form-item>
@@ -157,7 +165,7 @@
                          label="物料描述"
                          width="180px">
         </el-table-column>
-        <el-table-column prop="amountUnit"
+        <el-table-column prop="realCostPrice"
                          label="计划成本单价"   width="180px">
         </el-table-column>
 
@@ -165,7 +173,8 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row,materials[scope.$index].id)">添加</el-button>
+              type="success"
+              @click="handleEdit(scope.$index, scope.row,materials[scope.$index].id)"><i class="el-icon-plus"></i></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -198,8 +207,6 @@
             L1:[],
             L2:[],
             L3:[],
-            pageNum:1,
-            pageSize:5,
             DFile: {
               id:'',
               firstKindName:'',
@@ -233,6 +240,8 @@
               firstKindId: '',
               secondKindId: '',
               thirdKindId: '',
+              pageNum:1,
+              pageSize:5,
             },
             dialogVisible: false,
             dialogVisible2:false
@@ -272,11 +281,13 @@
                 that.$router.push("/Main")
               }
               else{
+                this.list=[];
                 this.$notify.error({
                   title: '错误',
                   message: response.data.message,
                   type:'error'
                 });
+
               }
           })
         },
@@ -302,7 +313,10 @@
           }
         },
         //切换页面
-        handleCurrentChange(val){this.pageNum=val},
+        handleCurrentChange(val){
+          this.condition.pageNum=val;
+          this.loadTables();
+        },
         //添加
         handleEdit(v1,v2,v3){
              var repeat=false;
@@ -331,6 +345,9 @@
         },
         //根据条件查询物料
         queryMaterial(){
+         this.loadTables();
+        },
+        loadTables(){
           this.axios
             .post('http://localhost:1217/enxin/d-file/queryMaterial', this.condition, {
               headers: {
@@ -446,5 +463,13 @@
   }
   .t1{
     margin-left: 20px;
+  }
+  .inp >>>  .el-input__inner{
+    border: none;
+    border-bottom: 1px solid gray;
+    /*margin-left: -40px;*/
+    height: 25px !important;
+    width: 100px !important;
+    background-color: lightgoldenrodyellow;
   }
 </style>

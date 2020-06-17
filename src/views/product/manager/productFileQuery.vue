@@ -38,6 +38,8 @@
     </div>
     <div v-show="!see">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                :row-class-name="tableRowClassName"
                 style="width:100%">
         <el-table-column
           prop="productId"
@@ -73,7 +75,7 @@
       </el-table>
       <el-pagination
         background
-        :page-size="5"
+        :page-size="10"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="total">
@@ -99,7 +101,7 @@
           date1: '',
           date2: '',
           pageNum:1,
-          pageSize:5,
+          pageSize:10,
         },
         useType: [],
         total:0,
@@ -110,6 +112,14 @@
       }
     },
     methods:{
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex === 1) {
+          return 'warning-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }
+        return '';
+      },
       //加载表格
       loadTable(){
         this.axios.post("http://localhost:1217/enxin/d-file/searchDFileByCondition", this.condition, {
@@ -200,5 +210,11 @@
 </script>
 
 <style scoped>
+  .el-table .warning-row {
+    background: oldlace;
+  }
 
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
 </style>

@@ -4,6 +4,7 @@
       <el-row :gutter="24">
         <el-col :span="18" :offset="3">
           <el-table :data="manufactureList"
+                    :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                     row-key="id"
                     border fit highlight-current-row
 
@@ -25,9 +26,10 @@
             <el-table-column label="出库单编号集合">
             </el-table-column>
             <el-table-column label="登记时间"
-                             prop="registerTime">
+                             prop="registerTime"
+                              width="180px">
             </el-table-column>
-            <el-table-column>
+            <el-table-column label="审核">
                 <template slot-scope="scope">
                   <router-link :to="{name:'ViewManufacture',params:{id:scope.row.id}}">审核</router-link>
                 </template>

@@ -253,7 +253,7 @@
                     message: response.data.message,
                     type: 'success'
                   });
-                  this.$router.push("/entry/erc");
+                  this.$router.push("/out/orc");
                 }else{
                   this.$notify({
                     title: '失败',

@@ -63,6 +63,7 @@
     </div>
     <div v-show="!vis">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 style="width:100%">
         <el-table-column
           prop="designId"
@@ -82,7 +83,7 @@
                          width="180px">
         </el-table-column>
         <el-table-column prop="registerTime"
-                         label="产品名称"
+                         label="登记时间"
                          width="180px">
         </el-table-column>
         <el-table-column prop="costPriceSum"
@@ -131,6 +132,7 @@
       <el-row :gutter="20">
         <el-table :data="details"
                   stripe
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   ref="multipleTable"
                   style="width:100%">
           <el-table-column

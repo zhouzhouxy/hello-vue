@@ -3,8 +3,8 @@
       <el-row :gutter="24" v-if="vis">
         <el-col :span="8" :offset="14">
             <el-button-group>
-                <el-button @click="makeOrder()">生成设计单</el-button>
-                <el-button @click="searchBox=!searchBox">搜索</el-button>
+                <el-button type="primary" @click="makeOrder()">生成设计单</el-button>
+                <el-button type="success" @click="searchBox=!searchBox">搜索</el-button>
             </el-button-group>
         </el-col>
       </el-row>
@@ -12,6 +12,7 @@
         <el-col :span="18" :offset="3">
           <el-table :data="applyList"
                     row-key="id"
+                    :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                     border fit highlight-current-row
                     @selection-change="changeFun"
                     ref="multipleTable"
@@ -55,13 +56,13 @@
       </el-row>
 
 
-      <div style="border: 1px solid black; text-align: center;width: 800px"  v-if="box2">
+      <div style="margin:0px auto; text-align: center;width: 800px"  v-if="box2">
 
           <el-row :gutter="24">
-            <el-col :span="6" :offset="8">
+            <el-col :span="6" :offset="18">
                <el-button-group>
-                  <el-button @click="preview()">预览</el-button>
-                  <el-button @click="ret2()">返回</el-button>
+                  <el-button type="success" @click="preview()">预览</el-button>
+                  <el-button type="danger" @click="ret2()">返回</el-button>
                 </el-button-group>
             </el-col>
           </el-row>
@@ -138,8 +139,8 @@
         <el-row :gutter="20">
           <el-col :span="6" :offset="13">
             <el-button-group>
-              <el-button @click="confirm()">提交</el-button>
-              <el-button @click="retu()">返回</el-button>
+              <el-button type="primary" @click="confirm()">提交</el-button>
+              <el-button type="danger" @click="retu()">返回</el-button>
             </el-button-group>
           </el-col>
 
@@ -183,6 +184,7 @@
         <el-row :gutter="20">
           <el-table :data="details"
                     stripe
+                    :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                     ref="multipleTable"
                     style="width:100%">
             <el-table-column
@@ -373,27 +375,28 @@
           },
           //点击提交
           confirm() {
-            this.axios.put("http://127.0.0.1:1217/enxin/m-manufacture/addManufacture",
-            this.manufacture,
-              {headers:{'Content-Type':'application/json'}})
-              .then((response)=>{
-                  if(response.data.success){
-                    this.$message({
-                      message: response.data.message,
-                      type: 'success'
-                    });
-                    //重新加载表格
-                    this.loadTables();
-                    //隐藏
-                    this.box3=false;
-                      this.vis=true;
-                  }else{
-                    this.$message({
-                      message: response.data.message,
-                      type: 'error'
-                    });
-                  }
-              })
+            console.log(this.manufacture);
+             this.axios.put("http://127.0.0.1:1217/enxin/m-manufacture/addManufacture",
+             this.manufacture,
+               {headers:{'Content-Type':'application/json'}})
+               .then((response)=>{
+                   if(response.data.success){
+                     this.$message({
+                       message: response.data.message,
+                       type: 'success'
+                     });
+                     //重新加载表格
+                     this.loadTables();
+                     //隐藏
+                     this.box3=false;
+                       this.vis=true;
+                   }else{
+                     this.$message({
+                       message: response.data.message,
+                       type: 'error'
+                     });
+                   }
+               })
           },
           ret2(){
               this.box2=false;
@@ -488,26 +491,27 @@
         },
       created(){
           this.loadTables();
+        Date.prototype.Format = function (fmt) { // author: meizz
+          var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+          };
+          if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+        }
+        this.manufacture.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
       },
       beforeRouteEnter:(to,from,next)=>{
         next(vm => {
-          Date.prototype.Format = function (fmt) { // author: meizz
-            var o = {
-              "M+": this.getMonth() + 1, // 月份
-              "d+": this.getDate(), // 日
-              "h+": this.getHours(), // 小时
-              "m+": this.getMinutes(), // 分
-              "s+": this.getSeconds(), // 秒
-              "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-              "S": this.getMilliseconds() // 毫秒
-            };
-            if (/(y+)/.test(fmt))
-              fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-          }
-          vm.manufacture.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
         });
       },
     }

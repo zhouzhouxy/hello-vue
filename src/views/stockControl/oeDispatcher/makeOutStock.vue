@@ -34,7 +34,7 @@
     </el-table>
     <el-pagination
       background
-      :page-size="5"
+      :page-size="10"
       @current-change="handleCurrentChange"
       layout="prev, pager, next"
       :total="total">
@@ -49,7 +49,7 @@
       return{
         sPayList:[],
           pageNum:1,
-          pageSize:5,
+          pageSize:10,
         tableHeaderStyle:{
           'background':'skyblue',
           'color':'#fff'

@@ -38,6 +38,7 @@
     </div>
     <div v-show="!see">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 style="width:100%">
         <el-table-column
           prop="productId"

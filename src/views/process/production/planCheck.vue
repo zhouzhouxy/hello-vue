@@ -1,10 +1,12 @@
 <template>
     <div class="box">生产计划审核
       <el-table :data="applyList"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 stripe
                 ref="multipleTable"
                 style="width:100%">
         <el-table-column label="生产计划编号"
+                         width="200px"
                          prop="applyId">
         </el-table-column>
         <el-table-column label="计划指定人"

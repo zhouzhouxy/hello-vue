@@ -41,7 +41,7 @@
           width="55">
         </el-table-column>
         <el-table-column
-          label="序号"
+          label="工序状态"
           width="55">
           <template slot-scope="scope">
               <span v-if="scope.row.procedureFinishTag==0">等待</span>

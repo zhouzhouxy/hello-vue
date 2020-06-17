@@ -4,7 +4,7 @@
             <el-col :span="8" :offset="8">
               <el-button @click="dialogVisible=true">添加新工序</el-button>
               <el-button @click="commit()">重新提交</el-button>
-              <el-button>
+              <el-button @click="back()">
                 返回
               </el-button>
             </el-col>
@@ -165,6 +165,9 @@
             }
         },
       methods:{
+          back(){
+              this.$router.push("/process/proc")
+          },
         handleClose(){
           this.dialogVisible=false;
         },

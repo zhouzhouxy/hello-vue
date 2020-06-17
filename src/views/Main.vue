@@ -1,5 +1,5 @@
 <template>
-      <el-container style="height: 1200px; border: 1px solid #eee;">
+      <el-container style="height: 800px; border: 1px solid #eee;">
         <el-aside width="200px">
           <el-menu class="men">
             <el-submenu index="3">
@@ -190,21 +190,37 @@
                   </el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
+              <el-submenu index="5-5">
+                <template slot="title">动态库存管理</template>
+                <el-menu-item-group>
+                  <el-menu-item index="5-5-1">
+                    <router-link  to="/dynamic/dsq">动态库存查询</router-link>
+                  </el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+
             </el-submenu>
           </el-menu>
         </el-aside>
         <el-container>
-          <el-header style="text-align:right;font-size:12px;background-color: #0a76a4">
+          <el-header style="text-align:right;font-size:12px;background-color: #409EFF">
+            <el-row :gutter="24">
+                <el-col :span="10" :offset="4">
+                    <h1 style="font-size:30px;color: #ffffff; margin-top:8px;">恩信ERP企业管理系统</h1>
+                </el-col>
+                <el-col :span="2" :offset="8">
+                  <el-dropdown>
+                    <i class="el-icon-setting" style="margin-right:15px"></i>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>个人信息</el-dropdown-item>
+                      <el-dropdown-item><router-link to="/logout">退出登录</router-link></el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                  <!--            <span>{{$route.params.username}}</span> 路由取值方法-->
+                  <span>{{$store.getters.getUser.username}}</span>
+                </el-col>
+            </el-row>
 
-            <el-dropdown>
-              <i class="el-icon-setting" style="margin-right:15px"></i>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>个人信息</el-dropdown-item>
-                <el-dropdown-item><router-link to="/logout">退出登录</router-link></el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-<!--            <span>{{$route.params.username}}</span> 路由取值方法-->
-            <span>{{$store.getters.getUser.username}}</span>
           </el-header>
           <el-main style="background-color: #E4E7ED">
             <router-view/>
@@ -220,6 +236,10 @@
 </script>
 
 <style scoped>
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
     .men >>> .router-link-active {
     text-decoration: none;
   }

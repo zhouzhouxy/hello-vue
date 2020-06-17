@@ -17,3 +17,9 @@
     }
   }
 </script>
+<style>
+  #app {
+    margin: -8px;
+    padding: -8px;
+  }
+</style>

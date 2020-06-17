@@ -1,10 +1,10 @@
 <template>
     <div class="box">
       <el-row :gutter="20">
-        <el-col :span="6" :offset="13">
+        <el-col :span="6" :offset="18">
           <el-button-group>
-            <el-button @click="confirm()">确认</el-button>
-            <el-button @click="retu()">返回</el-button>
+            <el-button type="primary" @click="confirm()">确认</el-button>
+            <el-button type="success" @click="retu()"><i class="el-icon-back"></i></el-button>
           </el-button-group>
         </el-col>
 
@@ -33,6 +33,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-table :data="details"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   stripe
                   ref="multipleTable"
                   style="width:100%">
@@ -67,8 +68,8 @@
           </el-table-column>
           <el-table-column label="设计"   width="120px">
               <template slot-scope="scope">
-                  <el-button v-if="scope.row.designModuleTag==0" @click="queryMaterial(scope.row.id)">设计</el-button>
-                  <el-button v-if="scope.row.designModuleTag==1"  @click="viewDesign(scope.row.id)">重新设计</el-button>
+                  <el-button type="primary" v-if="scope.row.designModuleTag==0" @click="queryMaterial(scope.row.id)">设计</el-button>
+                  <el-button type="warning" v-if="scope.row.designModuleTag==1"  @click="viewDesign(scope.row.id)">重新设计</el-button>
               </template>
           </el-table-column>
         </el-table>
@@ -105,13 +106,15 @@
       <el-dialog title="工序物料设计单"
                  :visible.sync="dialogTableVisible"
                  :before-close="handleClose"
-                 width="1200px">
+                 :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                 width="1200px"
+      center>
 
         <el-button-group>
-            <el-button @click="preview(pId)">预览</el-button>
-            <el-button @click="rt1()">返回</el-button>
+            <el-button type="primary" @click="preview(pId)">预览</el-button>
+            <el-button type="success"  @click="rt1()"><i class="el-icon-back"></i></el-button>
         </el-button-group>
-        <el-table :data="cpmaterials" >
+        <el-table :data="cpmaterials"  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}">
           <el-table-column property="detailsNumber" label="序号" width="50"></el-table-column>
           <el-table-column property="productName" label="物料名称" width="80"></el-table-column>
           <el-table-column property="productId" label="物料编号" width="180"></el-table-column>
@@ -134,10 +137,11 @@
                  width="1200px">
 
         <el-button-group>
-          <el-button @click="rt2()">返回</el-button>
-          <el-button @click="commit(pId)">确认</el-button>
+          <el-button type="success" @click="rt2()"><i class="el-icon-back"></i></el-button>
+          <el-button type="primary" @click="commit(pId)">确认</el-button>
         </el-button-group>
-        <el-table :data="procedureModule" >
+        <el-table :data="procedureModule"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}">
           <el-table-column property="detailsNumber" label="序号" width="50"></el-table-column>
           <el-table-column property="productName" label="物料名称" width="80"></el-table-column>
           <el-table-column property="productId" label="物料编号" width="180"></el-table-column>

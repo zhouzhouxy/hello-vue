@@ -1,6 +1,9 @@
 <template>
-  <div>  <el-table :data="list"
+  <div id="tab">
+    <el-table  :data="list"
                    stripe
+                   :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                   :row-class-name="tableRowClassName"
                    ref="multipleTable"
                    style="width:100%">
     <el-table-column
@@ -61,6 +64,15 @@
       }
     },
     methods:{
+      tableRowClassName({row, rowIndex}) {
+        console.log(rowIndex);
+        if (rowIndex === 1) {
+          return 'warning-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }
+        return '';
+      },
       handleCurrentChange(val){
         this.pageNum=val;
         this.loadTables();
@@ -84,6 +96,13 @@
 </script>
 
 <style scoped>
+  #tab >>> .el-table .warning-row {
+    background: oldlace;
+  }
+
+  #tab >>> .el-table .success-row {
+    background: #f0f9eb;
+  }
 
 </style>
 

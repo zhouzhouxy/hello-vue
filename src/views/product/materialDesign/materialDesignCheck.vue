@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table :data="list"
+              :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
               style="width:100%">
       <el-table-column
         prop="designId"
@@ -29,7 +30,7 @@
       <el-table-column label="审核">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            type="primary" icon="el-icon-search"
             @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)">审核</el-button>
         </template>
       </el-table-column>
@@ -44,34 +45,40 @@
     </el-pagination>
 
     <!--  点击审核显示物料组成设计单-->
-    <el-dialog title="物料组成设计单" width="1200px" :visible.sync="dialogFormVisible">
+    <el-dialog title="物料组成设计单" width="1200px" :visible.sync="dialogFormVisible"  center>
+      <el-row :gutter="20">
+          <el-col :span="5" :offset="18">
+             <el-radio-group v-model="pcRadio">
+              <el-radio :label="0">未通过</el-radio>
+              <el-radio :label="1">通过</el-radio>
+            </el-radio-group>
+           </el-col>
+      </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
           <span>设计单编号:</span>
-          <span>{{dModule.designId}}</span>
+          <span class="yl">{{dModule.designId}}</span>
         </el-col>
-        <el-col :span="2" :offset="3">设计人
+        <el-col :span="2" :offset="4" >
+          <span>设计人</span>
         </el-col>
-        <el-col :span="3" >
+        <el-col :span="3" class="inp">
             <el-input v-model="dModule.designer"></el-input>
          </el-col>
-        <el-radio-group v-model="pcRadio">
-          <el-radio  label="未通过" ch></el-radio>
-          <el-radio label="通过"></el-radio>
-        </el-radio-group>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
           <span>产品名称:</span>
-          <span>{{dModule.productName}}</span>
+          <span class="yl"> {{dModule.productName}}</span>
         </el-col>
-        <el-col :span="8" :offset="3">
+        <el-col :span="8" :offset="4">
           <span>产品编号:</span>
-          <span>{{dModule.productId}}</span>
+          <span class="yl">{{dModule.productId}}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-table :data="details"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   style="width:100%">
         <el-table-column
           prop="detailsNumber"
@@ -116,17 +123,17 @@
       <el-row :gutter="20">
           <el-col :span="6">
             <span>物料总成本</span>
-            <span>{{dModule.costPriceSum}}</span>
+            <span class="yl">{{dModule.costPriceSum}}</span>
           </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="6">
           <span>审核人</span>
-          <span>{{dModule.checker}}</span>
+          <span class="yl">{{dModule.checker}}</span>
         </el-col>
         <el-col :span="6" :offset="6">
           <span>审核时间</span>
-          <span>{{dModule.registerTime}}</span>
+          <span class="yl">{{dModule.registerTime}}</span>
         </el-col>
       </el-row>
       <el-row :gutter="20">
@@ -151,7 +158,7 @@
         name: "makeMaterialDesignCheck",
         data() {
           return {
-            pcRadio:'pass',
+            pcRadio:0,
             dialogFormVisible:false,
              list:[],
              pageNum:1,
@@ -166,11 +173,12 @@
           //确定
         passCheck(){
           console.log(this.pcRadio)
-          if(this.pcRadio=="通过"){
+          if(this.pcRadio==1){
             this.dModule.checkTag="1";
           }else{
             this.dModule.checkTag="2";
           }
+          console.log(this.pcRadio)
           this.checkParam={dModule:this.dModule,details:this.details}
           console.log(this.checkParam)
           //提交审核
@@ -264,5 +272,15 @@
 </script>
 
 <style scoped>
-
+.yl{
+  background-color: #ffffaa;
+}
+.inp >>>  .el-input__inner{
+  border: none;
+  border-bottom: 1px solid gray;
+  /*margin-left: -40px;*/
+  height: 25px !important;
+  width: 100px !important;
+  background-color: lightgoldenrodyellow;
+}
 </style>

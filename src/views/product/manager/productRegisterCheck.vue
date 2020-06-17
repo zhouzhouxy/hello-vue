@@ -2,6 +2,8 @@
     <div>
       <span>产品档案登记复核</span>
         <el-table :data="list"
+        :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+         :row-class-name="tableRowClassName"
         style="width:100%">
         <el-table-column
         prop="productId"
@@ -32,7 +34,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)">复核</el-button>
+                @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)" type="primary">复核</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -47,8 +49,7 @@
       <el-dialog
         title="提示"
         :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose">
+         :before-close="handleClose">
         <el-form ref="DFile" :inline="true"  :model="DFile" class="demo-form-inline">
           <div class="mainInfo">
             <span>主信息</span>
@@ -65,19 +66,19 @@
             </el-form-item>
             <br>
             <el-form-item label="一级分类">
-              <el-select v-model="DFile.firstKindId" placeholder="一级分类">
-                <el-option v-for="firstKindId in L1" :label="firstKindId.kindName" :value="firstKindId.id"  :key="firstKindId.kindName"></el-option>
+              <el-select v-model="DFile.firstKindId"  placeholder="一级分类">
+                <el-option v-for="(firstKindId,index) in L1" :label="firstKindId.kindName" :value="firstKindId.id"  :key="index"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="二级分类">
               <el-select v-model="DFile.secondKindId" placeholder="二级分类">
-                <el-option v-for="secondKindId in L2" :value="secondKindId.id" :key="secondKindId.id">{{secondKindId.kindName}}</el-option>
+                <el-option v-for="secondKindId in L2" :label="secondKindId.kindName" :value="secondKindId.id" :key="secondKindId.id"> </el-option>
               </el-select>
             </el-form-item>
             <br>
             <el-form-item label="三级分类">
               <el-select v-model="DFile.thirdKindId" placeholder="三级分类">
-                <el-option v-for="thirdKindId in L3" :value="thirdKindId.id" :key="thirdKindId.id">{{thirdKindId.kindName}}</el-option>
+                <el-option v-for="thirdKindId in L3" :label="thirdKindId.kindName" :value="thirdKindId.id" :key="thirdKindId.id"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="产品简称">
@@ -200,6 +201,14 @@
           }
       },
       methods:{
+        tableRowClassName({row, rowIndex}) {
+          if (rowIndex === 1) {
+            return 'warning-row';
+          } else if (rowIndex === 3) {
+            return 'success-row';
+          }
+          return '';
+        },
         //关闭模态框
         handleClose(){
           this.dialogVisible=false;
@@ -323,6 +332,14 @@
             console.log(error);
           })
       },
+       computed:{
+         firstKindId:function(){
+           return this.DFile.firstKindId;
+         },
+         secondKindId:function(){
+           return this.DFile.secondKindId;
+         }
+       },
        watch:{
          //一级分类
          firstKindId(newVal,oldVal){
@@ -352,6 +369,12 @@
     }
 </script>
 
-<style scoped>
+<style>
+  .el-table .warning-row {
+    background: oldlace;
+  }
 
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
 </style>

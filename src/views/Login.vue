@@ -12,6 +12,7 @@
       <el-form-item>
 <!--        <el-button type="primary" @click="submitForm('form')">登录</el-button>-->
         <el-button type="primary" @click="submitForm()">登录</el-button>
+        <el-button  type="danger" @click="register()">注册</el-button>
       </el-form-item>
     </el-form>
 
@@ -76,6 +77,10 @@
       //     // this.$store.dispatch('asyncUpdateUser',{username:this.form.username})
       //   })
       // }
+      //注册
+      register(){
+        this.$router.push("/register")
+      },
       submitForm() {
            this.axios({
             url:'http://localhost:1217/user/login',
@@ -100,7 +105,7 @@
                  } else {
                    this.$message({
                      message: '你的用户名密码错误',
-                     type: 'warning'
+                     type: 'error'
                    });
                    return false;
                  }
@@ -108,7 +113,7 @@
              }else{
                this.$message({
                  message: response.data.message,
-                 type: 'warning'
+                 type: 'error'
                });
                return false;
              }

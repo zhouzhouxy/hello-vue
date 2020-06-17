@@ -42,6 +42,9 @@
     </div>
     <div v-show="!see">
       <el-table :data="list"
+                :stripe="true"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                :row-class-name="tableRowClassName"
                 style="width:100%">
         <el-table-column
           prop="productId"
@@ -72,13 +75,13 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)">档案变更</el-button>
+              @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)" type="warning">档案变更</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         background
-        :page-size="5"
+        :page-size="10"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="total">
@@ -87,8 +90,7 @@
       <el-dialog
         title="提示"
         :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose">
+         :before-close="handleClose">
         <el-form ref="DFile" :inline="true"  :model="DFile" class="demo-form-inline">
           <div class="mainInfo">
             <span>主信息</span>
@@ -223,7 +225,7 @@
             date1: '',
             date2: '',
             pageNum:1,
-            pageSize:5
+            pageSize:10
           },
           total:0,
 
@@ -261,6 +263,14 @@
         }
       },
       methods:{
+        tableRowClassName({row, rowIndex}) {
+          if (rowIndex === 1) {
+            return 'warning-row';
+          } else if (rowIndex === 3) {
+            return 'success-row';
+          }
+          return '';
+        },
         //关闭模态框
         handleClose(){
           this.dialogVisible=false;
@@ -385,6 +395,12 @@
     }
 </script>
 
-<style scoped>
+<style>
+  .el-table .warning-row {
+    background: oldlace;
+  }
 
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
 </style>

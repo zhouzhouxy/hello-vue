@@ -62,6 +62,7 @@
       </div>
       <div v-show="!vis">
         <el-table :data="list"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   style="width:100%">
           <el-table-column
             prop="designId"

@@ -77,9 +77,9 @@
           <el-table-column
             label="申请单状态">
             <template slot-scope="scope">
-              <span v-if="scope.row.checkTag==0">等待</span>
-              <span v-else-if="scope.row.reason==1">执行</span>
-              <span v-else-if="scope.row.reason==2">等待</span>
+              <span v-if="scope.row.payTag==0">等待</span>
+              <span v-else-if="scope.row.payTag==1">执行</span>
+              <span v-else-if="scope.row.payTag==2">完成</span>
               <span v-else>等待</span>
             </template>
           </el-table-column>

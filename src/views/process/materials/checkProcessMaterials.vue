@@ -9,8 +9,8 @@
       </el-col>
       <el-col :span="6" :offset="13">
         <el-button-group>
-          <el-button @click="confirm()">确认</el-button>
-          <el-button @click="retu()">返回</el-button>
+          <el-button type="success" @click="confirm()">确认</el-button>
+          <el-button type="danger" @click="retu()">返回</el-button>
         </el-button-group>
       </el-col>
 
@@ -40,6 +40,7 @@
     <el-row :gutter="20">
       <el-table :data="details"
                 stripe
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 ref="multipleTable"
                 style="width:100%">
         <el-table-column
@@ -73,7 +74,7 @@
         </el-table-column>
         <el-table-column label="设计"   width="120px">
           <template slot-scope="scope">
-             <el-button v-if="scope.row.designModuleTag==1"  @click="viewDesign(scope.row.id)">审核</el-button>
+             <el-button type="primary" v-if="scope.row.designModuleTag==1"  @click="viewDesign(scope.row.id)">审核</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -129,7 +130,9 @@
           <span>{{procedureDetail.registerTime}}</span>
         </el-col>
       </el-row>
-      <el-table :data="procedureDetailModule">
+      <el-table :data="procedureDetailModule"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+      >
         <el-table-column prop="detailsNumber"
                          width="40px" label="序号">
         </el-table-column>
@@ -163,7 +166,7 @@
     data(){
       return{
         checkTime:'',
-        pcRadio:"pass",
+        pcRadio:"未通过",
         details:[],
         designProcedure:{},
         materials:[],
@@ -240,27 +243,28 @@
     },
     beforeRouteEnter:(to,from,next)=>{
       next(vm => {
-        Date.prototype.Format = function (fmt) { // author: meizz
-          var o = {
-            "M+": this.getMonth() + 1, // 月份
-            "d+": this.getDate(), // 日
-            "h+": this.getHours(), // 小时
-            "m+": this.getMinutes(), // 分
-            "s+": this.getSeconds(), // 秒
-            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-            "S": this.getMilliseconds() // 毫秒
-          };
-          if (/(y+)/.test(fmt))
-            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-          for (var k in o)
-            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-          return fmt;
-        }
-        vm.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
       });
     },
     created:function () {
       this.loadTable();
+      Date.prototype.Format = function (fmt) { // author: meizz
+        var o = {
+          "M+": this.getMonth() + 1, // 月份
+          "d+": this.getDate(), // 日
+          "h+": this.getHours(), // 小时
+          "m+": this.getMinutes(), // 分
+          "s+": this.getSeconds(), // 秒
+          "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+          "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+          fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+          if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+      }
+      this.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
     }
   }
 </script>

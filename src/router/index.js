@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Login from "../views/Login"
+import Register from "../views/Register"
 import Main from '../views/Main'
 
 import UserInfo from "../views/children/UserInfo"
@@ -63,6 +64,9 @@ import ViewManufacture2 from '../views/process/productionDispatching/viewManufac
 import ProductionRegister from '@/views/process/innerProductionManager/productionRegister'
 import ProductionRegisterCheck from '@/views/process/innerProductionManager/productionRegisterCheck'
 import ProductionQuery from '@/views/process/innerProductionManager/productionQuery'
+import OperationSimpleProduction from '@/views/process/innerProductionManager/opertionSimpleProduction'
+import CheckSimpleProduction from '@/views/process/innerProductionManager/checkSimpleProduction'
+import QuerySimpleProduction from '@/views/process/innerProductionManager/querySimpleProduction'
 
 //-----------------------------------------------------------------------
 //----------------------------------库存管理-------------------------------------
@@ -98,7 +102,8 @@ import OutDispatcher from '../views/stockControl/oeDispatcher/outDispatcher'
 
 import test from '@/views/Test'
 
-
+//动态库存管理
+import DynamicStockQuery from '../views/stockControl/dynamicStockManager/dynamicStockQuery'
 Vue.use(Router);
 
 export default new Router({
@@ -109,6 +114,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path:'/register',
+      name:'Register',
+      component:Register
     },
       //测试页面
     {
@@ -167,6 +177,9 @@ export default new Router({
         {path:'/pm/pg',name:'ProductionRegister',component:ProductionRegister},
         {path:'/pm/pgc',name:'ProductionRegisterCheck',component:ProductionRegisterCheck},
         {path:'/pm/pq',name:'ProductionQuery',component:ProductionQuery},
+        {path:'/pm/osp/:id',name:'OperationSimpleProduction',component:OperationSimpleProduction,props:true},
+        {path:'/pm/csp/:id',name:'CheckSimpleProduction',component:CheckSimpleProduction,props:true},
+        {path:'/pm/qsp/:id',name:'QuerySimpleProduction',component:QuerySimpleProduction,props:true},
         //-------------------------------------------------------------------------
         //------------------------------库存管理-------------------------------------------
         //-------------------------------------------------------------------------
@@ -195,13 +208,15 @@ export default new Router({
         {path:'/out/oq',name:'OutQuery',component:OutQuery},
         {path:'/out/co/:id',name:'CheckOut',component:CheckOut,props:true},
         {path:'/out/vo/:id',name:'ViewOut',component:ViewOut,props:true},
-
+        //动态库存管理
+        {path:'/dynamic/dsq',name:'DynamicQuery',component:DynamicStockQuery},
       ]
     },
     {
       path:'/goMain/:username',
       redirect:'/Main/:username'
-    },{
+    },
+    {
       path:'*',
       component:NotFound
     }

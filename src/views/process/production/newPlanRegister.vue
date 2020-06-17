@@ -3,12 +3,11 @@
         <el-row :gutter="24">
           <el-col :span="10" :offset="14">
             <el-button-group>
-              <el-button v-if="!vis" @click="addProductDialog" >添加产品</el-button>
-              <el-button v-if="!vis" @click="delProduct()">删除产品</el-button>
-              <el-button v-if="!vis" @click="preview()">预览</el-button>
-              <el-button v-if="!vis">返回</el-button>
-              <el-button v-if="vis" @click="vis=!vis">返回</el-button>
-              <el-button v-if="vis" @click="confirm()">确定</el-button>
+              <el-button type="primary" v-if="!vis" @click="addProductDialog" ><i class="el-icon-plus"></i></el-button>
+              <el-button type="danger" v-if="!vis" @click="delProduct()"><i class="el-icon-delete"></i></el-button>
+              <el-button type="success" v-if="!vis" @click="preview()"><i class="el-icon-search"></i></el-button>
+               <el-button type="info" v-if="vis" @click="vis=!vis">返回</el-button>
+              <el-button type="primary" v-if="vis" @click="confirm()">确定</el-button>
             </el-button-group>
           </el-col>
         </el-row>
@@ -42,10 +41,12 @@
           <!--表格-->
           <el-table :data="fileList"
             stripe
+                    :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
             ref="multipleTable"
             @selection-change="changeFun"
             style="width:100%">
             <el-table-column
+
               type="selection"
               width="55">
             </el-table-column>
@@ -60,8 +61,9 @@
             </el-table-column>
             <el-table-column label="数量" width="240px">
               <template slot-scope="scope">
-                <el-input-number :min="1" v-model="scope.row.amount">
+                <el-input-number v-if="!vis" size="mini" :min="1" v-model="scope.row.amount">
                 </el-input-number>
+                <span v-else>{{scope.row.amount}}</span>
               </template>
             </el-table-column>
             <el-table-column label="单位"
@@ -80,6 +82,7 @@
         <!--显示查询条件-->
         <el-dialog
         title="提示"
+
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose">
@@ -114,6 +117,7 @@
          width="60%"
          :before-close="handleClose">
          <el-table :data="products"
+                   :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                    style="width:100%">
            <el-table-column
              prop="productId"
@@ -140,7 +144,8 @@
              <template slot-scope="scope">
                <el-button
                  size="mini"
-                 @click="handleEdit(scope.row)">生产</el-button>
+                 type="primary"
+                 @click="handleEdit(scope.row)" icon="el-icon-check" circle></el-button>
              </template>
            </el-table-column>
          </el-table>
@@ -311,23 +316,7 @@
       },
       beforeRouteEnter:(to,from,next)=>{
         next(vm => {
-          Date.prototype.Format = function (fmt) { // author: meizz
-            var o = {
-              "M+": this.getMonth() + 1, // 月份
-              "d+": this.getDate(), // 日
-              "h+": this.getHours(), // 小时
-              "m+": this.getMinutes(), // 分
-              "s+": this.getSeconds(), // 秒
-              "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-              "S": this.getMilliseconds() // 毫秒
-            };
-            if (/(y+)/.test(fmt))
-              fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-          }
-          vm.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
         });
       },
       created(){
@@ -340,6 +329,23 @@
               //请求失败处理
               console.log(error)
             });
+        Date.prototype.Format = function (fmt) { // author: meizz
+          var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+          };
+          if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+        }
+        this.registerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
       },
       computed:{
         firstKindId:function(){

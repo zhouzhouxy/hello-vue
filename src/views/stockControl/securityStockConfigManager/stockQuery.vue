@@ -260,7 +260,6 @@
         this.loadTable();
       },
       onSubmit(){
-        console.log(this.condition)
         this.loadTable();
         this.vis=false;
       },

@@ -72,12 +72,15 @@
         </el-col>
       </el-row>
     </div>
-    <div v-show="!vis">
+    <div v-show="!vis" id="tab">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                :cell-class-name="checkDel"
                 style="width:100%">
         <el-table-column
           prop="designId"
           label="设计单编号"
+
           width="200">
         </el-table-column>
         <el-table-column prop="productId"
@@ -106,7 +109,7 @@
         <el-table-column
           label="查看详情"   width="180px">
           <template slot-scope="scope">
-            <el-button @click="viewMaterial(scope.row.id)">
+            <el-button type="primary" @click="viewMaterial(scope.row.id)">
               查看详情
             </el-button>
           </template>
@@ -115,7 +118,7 @@
       </el-table>
       <el-pagination
         background
-        :page-size="5"
+        :page-size="10"
         @current-change="handleCurrentChange"
         layout="prev, pager, next"
         :total="total">
@@ -230,7 +233,7 @@
         goodsList:[],
         condition:{
           pageNum:1,
-          pageSize:5
+          pageSize:10
         },
         list:[],
         total:0,
@@ -241,6 +244,11 @@
       }
     },
     methods:{
+      checkDel({row, column, rowIndex, columnIndex}){
+        if (this.list[rowIndex]['checkTag']=="1"){
+          return 'red'
+        }
+      },
       //查看设计单详情
       viewMaterial(id){
         // 根据id查询设计单
@@ -351,5 +359,8 @@
   }
   .el-row{
     border: 1px solid white;
+  }
+  #tab >>> .el-table .red{
+    background: #F5F5DC;
   }
 </style>

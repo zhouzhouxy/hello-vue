@@ -2,25 +2,26 @@
     <div>  <el-table :data="list"
                      stripe
                      ref="multipleTable"
+                     :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                      style="width:100%">
       <el-table-column
         prop="designId"
         label="工序设计单编号"
-        width="170px">
+        width="200px">
       </el-table-column>
       <el-table-column
         prop="productId"
         label="产品编号"
-        width="180px">
+        width="200px">
 
       </el-table-column>
       <el-table-column prop="productName"
                        label="产品名称"
-                       width="80px">
+                       width="200px">
       </el-table-column>
       <el-table-column prop="designer"
                        label="设计人"
-                       width="80px">
+                       width="200px">
       </el-table-column>
       <el-table-column prop="registerTime"
                        label="登记时间"   width="180px">

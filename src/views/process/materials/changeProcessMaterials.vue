@@ -3,8 +3,8 @@
     <el-row :gutter="20">
       <el-col :span="6" :offset="13">
         <el-button-group>
-          <el-button @click="confirm()">确认</el-button>
-          <el-button @click="retu()">返回</el-button>
+          <el-button type="success" @click="confirm()">确认</el-button>
+          <el-button type="danger" @click="retu()">返回</el-button>
         </el-button-group>
       </el-col>
 
@@ -33,6 +33,7 @@
     </el-row>
     <el-row :gutter="20">
       <el-table :data="details"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 stripe
                 ref="multipleTable"
                 style="width:100%">
@@ -67,8 +68,8 @@
         </el-table-column>
         <el-table-column label="设计"   width="120px">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.designModuleChangeTag==1" @click="viewDesign(scope.row.id)">重新变更</el-button>
-            <el-button v-if="scope.row.designModuleChangeTag==0" @click="viewDesign(scope.row.id)">变更</el-button>
+            <el-button type="primary" v-if="scope.row.designModuleChangeTag==1" @click="viewDesign(scope.row.id,1)">变更</el-button>
+            <el-button type="warning" v-if="scope.row.designModuleChangeTag==0" @click="viewDesign(scope.row.id,0)">重新变更</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -315,14 +316,17 @@
           })
       },
       //点击重新设计 查询当前工序的工序物料
-      viewDesign(id){
+      viewDesign(id,dmc){
         this.pId=id;
         //根据id查询
         this.axios.get("http://localhost:1217/enxin/m-design-procedure-details/queryProcedureDetails?pId="+id)
           .then((response)=>{
-            this.dialogTableVisible3=true;
-            console.log(response)
-            this.procedureDetail=response.data.details;
+             if(parseInt(dmc)==1){
+              this.dialogTableVisible3=true;
+            }else{
+              this.dialogTableVisible2=true;
+            }
+             this.procedureDetail=response.data.details;
             this.procedureDetailModule=response.data.list;
           })
           .catch(function(error){

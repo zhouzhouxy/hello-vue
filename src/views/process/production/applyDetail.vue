@@ -1,14 +1,19 @@
 <template>
   <div class="box">
     <el-row :gutter="24">
-      <el-radio-group v-model="pcRadio">
-        <el-radio  label="未通过" ch></el-radio>
-        <el-radio label="通过"></el-radio>
-      </el-radio-group>
-      <el-button-group>
-        <el-button @click="confirm()">确认</el-button>
-        <el-button @click="ret()">返回</el-button>
-      </el-button-group>
+      <el-col :span="12">
+        <el-radio-group v-model="pcRadio">
+          <el-radio  label="未通过" ch></el-radio>
+          <el-radio label="通过"></el-radio>
+        </el-radio-group>
+      </el-col>
+      <el-col :span="8" :offset="4">
+        <el-button-group>
+          <el-button type="primary" @click="confirm()">确认</el-button>
+          <el-button type="warning" @click="ret()">返回</el-button>
+        </el-button-group>
+      </el-col>
+
     </el-row>
     <h4 class="box-title">生产计划单</h4>
     <el-row :gutter="20">
@@ -18,6 +23,7 @@
     </el-row>
     <!--表格-->
     <el-table :data="fileList"
+              :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
               stripe
         width="800px"
     >
@@ -38,10 +44,10 @@
 
     </el-table>
     <el-row :gutter="24">
-      <el-col :span="4">
+      <el-col :span="2">
         登记人：
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="inp">
         <el-input v-model="file.register"></el-input>
       </el-col>
       <el-col :span="8" :offset="6">
@@ -50,10 +56,10 @@
       </el-col>
     </el-row>
     <el-row :gutter="24">
-      <el-col :span="4">
+      <el-col :span="2">
         审核人：
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="inp">
         <el-input v-model="file.checker"></el-input>
       </el-col>
       <el-col :span="8" :offset="6">
@@ -72,7 +78,7 @@
         props:['applyId'],
         data(){
             return{
-              pcRadio:'pass',
+              pcRadio:'未通过',
               checkerTime:'',
               fileList:[],
               file:{}
@@ -128,27 +134,28 @@
                 registerTime:this.fileList[0].registerTime,register:this.fileList[0].register,
                 checker:this.$store.getters.getUser.username}
             })
+        Date.prototype.Format = function (fmt) { // author: meizz
+          var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+          };
+          if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+        }
+        this.checkerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
 
       },
       beforeRouteEnter:(to,from,next)=>{
         next(vm => {
-          Date.prototype.Format = function (fmt) { // author: meizz
-            var o = {
-              "M+": this.getMonth() + 1, // 月份
-              "d+": this.getDate(), // 日
-              "h+": this.getHours(), // 小时
-              "m+": this.getMinutes(), // 分
-              "s+": this.getSeconds(), // 秒
-              "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
-              "S": this.getMilliseconds() // 毫秒
-            };
-            if (/(y+)/.test(fmt))
-              fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-              if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-          }
-          vm.checkerTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
         });
       },
     }
@@ -156,6 +163,20 @@
 
 <style scoped>
   .box{
+    width:1217px;
+    margin:0px auto;
+    border:1px solid #0c0c0c;
+    padding: 35px;
+    border-radius:5px;
+    box-shadow:0 0 25px #091e25;
+  }
 
+  .inp >>>  .el-input__inner{
+    border: none;
+    border-bottom: 1px solid gray;
+    /*margin-left: -40px;*/
+    height: 25px !important;
+    width: 85% !important;
+    background-color: lightgoldenrodyellow;
   }
 </style>

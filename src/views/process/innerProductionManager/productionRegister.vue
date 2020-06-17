@@ -27,7 +27,7 @@
             </el-table-column>
             <el-table-column label="登记">
               <template slot-scope="scope">
-                <router-link :to="{name:'ViewManufacture2',params:{id:scope.row.id}}">查看</router-link>
+                <router-link :to="{name:'OperationSimpleProduction',params:{id:scope.row.id}}">登记</router-link>
               </template>
             </el-table-column>
           </el-table>
@@ -52,7 +52,8 @@
               condition:{
                 state:"1",
                 pageNum:1,
-                pageSize:5
+                pageSize:5,
+                manufactureProcedureTag:"3",
               },
             manufactureList:[],
             total:0

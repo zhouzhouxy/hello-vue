@@ -74,6 +74,7 @@
       </div>
       <div v-show="!vis">
         <el-table :data="list"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   style="width:100%">
           <el-table-column
             prop="designId"
@@ -106,7 +107,8 @@
           <el-table-column
                  label="查看详情"   width="180px">
               <template slot-scope="scope">
-                <el-button @click="viewMaterial(scope.row.id)">
+                <el-button @click="viewMaterial(scope.row.id)"
+                           type="primary" icon="el-icon-search">
                     查看详情
                 </el-button>
               </template>
@@ -122,7 +124,7 @@
         </el-pagination>
       </div>
       <!--  点击审核显示物料组成设计单-->
-      <el-dialog title="物料组成设计单" width="1200px" :visible.sync="dialogFormVisible">
+      <el-dialog title="物料组成设计单" width="1200px" :visible.sync="dialogFormVisible" center>
       <el-row :gutter="20">
         <el-col :span="8">
           <span>设计单编号:</span>
@@ -131,8 +133,8 @@
         <el-col :span="2" :offset="3">设计人
         </el-col>
         <el-col :span="3" >
-          <el-input v-model="dModule.designer"></el-input>
-        </el-col>
+          <span>{{dModule.designer}}</span>
+         </el-col>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
@@ -146,7 +148,8 @@
       </el-row>
       <el-row :gutter="20">
         <el-table :data="details"
-                  style="width:100%">
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                   style="width:100%">
           <el-table-column
             prop="detailsNumber"
             label="序号"
@@ -238,6 +241,12 @@
           }
       },
       methods:{
+        status_change: function (row) {
+          console.log(row)
+          if (row.row.checkTag === 0) {
+            return 'table-info-row'
+          }
+        },
           //查看设计单详情
         viewMaterial(id){
           // 根据id查询设计单
@@ -348,5 +357,9 @@
   }
   .el-row{
     border: 1px solid white;
+  }
+
+  .table-info-row td {
+    color: #5daf34;
   }
 </style>

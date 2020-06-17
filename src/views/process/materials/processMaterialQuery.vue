@@ -72,8 +72,10 @@
         </el-col>
       </el-row>
     </div>
-    <div v-show="!vis">
+    <div v-show="!vis" id="tab">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                :cell-class-name="checkDel"
                 style="width:100%">
         <el-table-column
           prop="designId"
@@ -245,6 +247,19 @@
       }
     },
     methods:{
+      checkDel({row, column, rowIndex, columnIndex}){
+        if (this.list[rowIndex]['checkTag']=="1"){
+          return 'success-row'
+        }
+      /*  console.log(rowIndex);
+        if (rowIndex === 1) {
+          return 'warning-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }*/
+        return '';
+      },
+
       //查看设计单详情
       viewMaterial(id){
         // 根据id查询设计单
@@ -355,6 +370,16 @@
   }
   .el-row{
     border: 1px solid white;
+  }
+  #tab >>> .el-table .red{
+    background: #F5F5DC;
+  }
+  #tab .el-table .warning-row {
+    background: oldlace;
+  }
+
+  #tab .el-table .success-row {
+    background: #f0f9eb;
   }
 </style>
 

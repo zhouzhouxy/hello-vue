@@ -38,6 +38,7 @@
     </div>
     <div v-show="!see">
       <el-table :data="list"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 style="width:100%">
         <el-table-column
           prop="productId"
@@ -61,7 +62,7 @@
                          label="三级分类"   width="180px">
         </el-table-column>
         <el-table-column prop="responsiblePerson"
-                         label="三级分类"   width="180px">
+                         label="产品经理"   width="180px">
         </el-table-column>
         <el-table-column label="指定设计单">
           <template slot-scope="scope">

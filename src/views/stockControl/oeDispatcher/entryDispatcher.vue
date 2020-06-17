@@ -3,7 +3,7 @@
     <el-row :gutter="24">
       <el-col :span="10" :offset="16">
         <el-button-group>
-          <el-button @click="back()">返回</el-button>
+          <el-button type="danger" @click="back()">返回</el-button>
         </el-button-group>
       </el-col>
     </el-row>
@@ -124,7 +124,9 @@
             <span>{{gatherDetails.costPrice}}</span>
           </el-col>
         </el-row>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData"
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
+                  style="width: 100%">
           <el-table-column label="库号" prop="number"></el-table-column>
           <el-table-column label="库房名称" prop="name"></el-table-column>
           <el-table-column label="存储地址编号" prop="siteNumber"></el-table-column>
@@ -228,6 +230,11 @@
       }
     },
     methods:{
+      checkDel({row, column, rowIndex, columnIndex}){
+        if (this.list[rowIndex]['checkTag']=="1"){
+          return 'red'
+        }
+      },
       commit(){
           if(this.entryAmount!=this.gatherDetails.amount){
             this.$message({
@@ -236,28 +243,36 @@
             });
             return;
           }
-          this.axios.get("http://127.0.0.1:1217/enxin/s-cell/dispatcher",
-            {params:{entryAmount:this.entryAmount,gdId:this.gatherDetails.id,scellId:this.sCell.id}})
-            .then((response)=>{
-                if(response.data.success){
-                  this.$notify({
-                    title: '成功',
-                    message: '提交成功',
-                    type: 'success'
-                  });
-                  //重新加载表格
-                  this.loadTables();
+          if(this.entryAmount>this.sCell.maxCapacityAmount - this.sCell.amount){
+            this.$message({
+              message: '当前库存放不下这么多入库数量',
+              type: 'warning'
+            });
+            return;
+          }
 
-                  //隐藏模态框
-                  this.dialogFormVisible=false;
-                }else{
-                  this.$notify({
-                    title: '错误',
-                    message: '提交失败',
-                    type: 'error'
-                  });
-                }
-            })
+        this.axios.get("http://127.0.0.1:1217/enxin/s-cell/dispatcher",
+          {params:{entryAmount:this.entryAmount,gdId:this.gatherDetails.id,scellId:this.sCell.id}})
+          .then((response)=>{
+              if(response.data.success){
+                this.$notify({
+                  title: '成功',
+                  message: '提交成功',
+                  type: 'success'
+                });
+                //重新加载表格
+                this.loadTables();
+
+                //隐藏模态框
+                this.dialogFormVisible=false;
+              }else{
+                this.$notify({
+                  title: '错误',
+                  message: '提交失败',
+                  type: 'error'
+                });
+              }
+          })
       },
       dispatch(data){
           //查询  判断该产品是否制定了安全库存配置单

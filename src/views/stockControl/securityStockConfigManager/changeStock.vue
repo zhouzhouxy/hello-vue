@@ -195,9 +195,12 @@
 
 <style scoped>
   .box{
-    width: 800px;
-    margin: 0px auto;
-    border: 1px solid black;
+    width:1217px;
+    margin:0px auto;
+    border:1px solid #0c0c0c;
+    padding: 35px;
+    border-radius:5px;
+    box-shadow:0 0 25px #091e25;
   }
   input::-webkit-input-placeholder {
     /* placeholder颜色  */

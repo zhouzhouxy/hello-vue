@@ -1,5 +1,5 @@
 <template>
-  <div class="cen">
+  <div class="box">
     <el-row :gutter="24">
       <el-col :span="10" :offset="16">
         <el-radio-group v-model="pcRadio">
@@ -7,8 +7,8 @@
           <el-radio label="通过" value="true"></el-radio>
         </el-radio-group>
         <el-button-group>
-          <el-button @click="back()">返回</el-button>
-          <el-button  @click="commit()">确认</el-button>
+          <el-button type="danger" @click="back()">返回</el-button>
+          <el-button type="primary" @click="commit()">确认</el-button>
         </el-button-group>
       </el-col>
     </el-row>
@@ -116,8 +116,8 @@
         <el-col :span="2">
           <span >备注：</span>
         </el-col>
-        <el-col :span="22">
-          <textarea v-model="gather.remark" rows="4" cols="40"></textarea>
+        <el-col :span="22" :offset="2">
+          <textarea v-model="gather.remark" rows="2" cols="40"></textarea>
         </el-col>
       </el-row>
     </div>
@@ -131,7 +131,7 @@
         props:['id'],
         data(){
             return{
-              pcRadio:'pass',
+              pcRadio:'未通过',
               gather:{},
               gatherList:[],
               tableHeaderStyle:{
@@ -204,5 +204,12 @@
 </script>
 
 <style scoped>
-
+  .box{
+    width:1217px;
+    margin:0px auto;
+    border:1px solid #0c0c0c;
+    padding: 35px;
+    border-radius:5px;
+    box-shadow:0 0 25px #091e25;
+  }
 </style>

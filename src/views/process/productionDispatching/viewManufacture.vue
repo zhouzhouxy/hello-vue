@@ -1,5 +1,7 @@
 <template>
   <div class="box" >
+
+    <h4 style="text-align: center">生产派工单</h4>
     <el-row :gutter="20">
       <el-col :span="6">
         <el-radio-group v-model="pcRadio">
@@ -9,13 +11,12 @@
       </el-col>
       <el-col :span="6" :offset="11">
         <el-button-group>
-          <el-button @click="confirm()">提交</el-button>
-          <el-button @click="retu()">返回</el-button>
+          <el-button type="primary" @click="confirm()">提交</el-button>
+          <el-button type="danger" @click="retu()">返回</el-button>
         </el-button-group>
       </el-col>
 
     </el-row>
-    <h4 style="text-align: center">生产派工单</h4>
     <el-row :gutter="20">
       <el-col :span="8">
         <span>派工单编号:</span>
@@ -40,18 +41,19 @@
       <el-col :span="3" :offset="3">
         <span>工单制定人:</span>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="inp">
         <el-input v-model="manufacture.designer"></el-input>
       </el-col>
     </el-row>
     <el-row :gutter="20">
       <el-table :data="details"
                 stripe
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 ref="multipleTable"
                 style="width:100%">
         <el-table-column
           prop="detailsNumber"
-          label="序号"
+          label="描述"
           width="55">
         </el-table-column>
         <el-table-column
@@ -80,7 +82,7 @@
         </el-table-column>
         <el-table-column label="设计"   width="120px">
           <template slot-scope="scope">
-            <el-button  @click="viewDesign(scope.row.id)">审核物料</el-button>
+            <el-button type="primary" @click="viewDesign(scope.row.id)">审核物料</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -99,7 +101,7 @@
       <el-col :span="3">
         <span>登记人</span>
        </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="inp">
         <el-input v-model="manufacture.register"></el-input>
       </el-col>
       <el-col :span="8" :offset="6">
@@ -111,7 +113,7 @@
       <el-col :span="3">
         <span>审核人</span>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="4" class="inp">
         <el-input v-model="checker"></el-input>
       </el-col>
       <el-col :span="8" :offset="6">
@@ -124,7 +126,7 @@
         <span>描述</span>
       </el-col>
       <el-col :span="4">
-        <span>{{manufacture.productDescribe}}</span>
+        <span>：{{manufacture.productDescribe}}</span>
        </el-col>
       <el-col :span="8" :offset="6">
         <span>出库单编号</span>
@@ -152,7 +154,8 @@
           <span>{{mProcedure.procedureName}}</span>
         </el-col>
       </el-row>
-      <el-table :data="mProcedureModule">
+      <el-table :data="mProcedureModule"
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}">
         <el-table-column prop="detailsNumber"
                          width="40px" label="序号">
         </el-table-column>
@@ -184,7 +187,7 @@
         props:['id'],
         data(){
             return{
-              pcRadio:'pass',
+              pcRadio:'未通过',
               dialogTableVisible3:false,
               manufacture: {},
               details:[],
@@ -260,9 +263,6 @@
             this.manufacture=response.data.mManufacture;
             this.details=response.data.list;
           })
-        },
-      beforeRouteEnter:(to,from,next)=>{
-        next(vm => {
           Date.prototype.Format = function (fmt) { // author: meizz
             var o = {
               "M+": this.getMonth() + 1, // 月份
@@ -279,7 +279,11 @@
               if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
             return fmt;
           }
-          vm.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+          this.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+
+        },
+      beforeRouteEnter:(to,from,next)=>{
+        next(vm => {
 
         });
       },
@@ -295,5 +299,13 @@
     padding: 35px;
     border-radius:5px;
     box-shadow:0 0 10px #0c0c0c;
+  }
+  .inp >>>  .el-input__inner{
+    border: none;
+    border-bottom: 1px solid gray;
+    /*margin-left: -40px;*/
+    height: 25px !important;
+    width: 100px !important;
+    background-color: lightgoldenrodyellow;
   }
 </style>

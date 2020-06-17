@@ -3,8 +3,8 @@
         <el-row :gutter="14">
           <el-col :span="8" :offset="15">
               <el-button-group>
-                <el-button @click="confirm()">提交</el-button>
-                <el-button @click="retu()">返回</el-button>
+                <el-button type="primary" @click="confirm()">提交</el-button>
+                <el-button type="success" @click="retu()"><i class="el-icon-back"></i></el-button>
               </el-button-group>
           </el-col>
         </el-row>
@@ -208,9 +208,12 @@
 
 <style scoped>
 .box{
-  width: 800px;
-  margin: 0px auto;
-  border: 1px solid black;
+  width:1000px;
+  margin:10px auto;
+  border:1px solid #0c0c0c;
+  padding: 35px;
+  border-radius:5px;
+  box-shadow:0 0 10px #0c0c0c;
 }
 input::-webkit-input-placeholder {
   /* placeholder颜色  */
@@ -222,14 +225,14 @@ input::-webkit-input-placeholder {
   font-size: 14px;
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
-.box  >>>  .el-input__inner{
+.box   >>>  .el-input__inner{
   border: none;
   border-bottom: 1px solid gray;
-  margin-left: -40px;
+  /*margin-left: -40px;*/
   height: 25px !important;
   width: 85% !important;
+  background-color: lightgoldenrodyellow;
 }
-
 .test >>>  .el-input__inner{
   height: 25px !important;
   width: 85% !important;

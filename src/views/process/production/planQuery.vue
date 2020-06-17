@@ -52,6 +52,7 @@
       <div v-if="!vis">
       <el-table :data="applyList"
                 stripe
+                :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                 ref="multipleTable"
                 style="width:100%">
         <el-table-column label="生产计划编号">
@@ -104,17 +105,21 @@
           }
       },
       methods:{
-        handleCurrentChange(){
-
+        handleCurrentChange(val){
+          this.condition.pageNum=val;
+          this.loadTables();
         },
-        onSubmit(){
+        loadTables(){
           this.axios.post("http://localhost:1217/enxin/m-apply/queryApplyByCondition",
-          this.condition,
+            this.condition,
             {headers:{'Content-Type':'application/json'}})
             .then((response)=>{
-                this.applyList= response.data.list;
-                this.total= response.data.total;
+              this.applyList= response.data.list;
+              this.total= response.data.total;
             })
+        },
+        onSubmit(){
+          this.loadTables();
           this.vis=false;
         }
       }

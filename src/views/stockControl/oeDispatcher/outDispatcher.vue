@@ -1,9 +1,9 @@
 <template>
   <div class="cen">
     <el-row :gutter="24">
-      <el-col :span="10" :offset="16">
+      <el-col :span="2" :offset="20">
         <el-button-group>
-          <el-button @click="back()">返回</el-button>
+          <el-button type="danger" @click="back()">返回</el-button>
         </el-button-group>
       </el-col>
     </el-row>
@@ -115,7 +115,9 @@
             <span>{{sPayDetails.costPrice}}</span>
           </el-col>
         </el-row>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table :data="tableData"
+                  :header-cell-style="tableHeaderStyle"
+                  style="width: 100%">
           <el-table-column label="库号" prop="number"></el-table-column>
           <el-table-column label="库房名称" prop="name"></el-table-column>
           <el-table-column label="存储地址编号" prop="siteNumber"></el-table-column>
@@ -171,8 +173,8 @@
         </el-row>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="commit()">提交</el-button>
-        <el-button @click="dialogFormVisible = false">返回</el-button>
+        <el-button type="primary" @click="commit()">提交</el-button>
+        <el-button type="danger" @click="dialogFormVisible = false">返回</el-button>
       </div>
     </el-dialog>
   </div>

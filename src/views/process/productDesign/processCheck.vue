@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-table :data="list"
+              :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
               style="width:100%">
       <el-table-column
         prop="designId"
@@ -29,7 +30,7 @@
       <el-table-column label="审核">
         <template slot-scope="scope">
           <el-button
-            size="mini"
+            type="primary"
             @click="handleEdit(scope.$index, scope.row,list[scope.$index].id)">审核</el-button>
         </template>
       </el-table-column>
@@ -46,19 +47,23 @@
     <!--  点击审核显示物料组成设计单-->
     <el-dialog title="生产工序设计单" width="1200px" :visible.sync="dialogFormVisible">
       <el-row :gutter="20">
+        <el-col :span="6" :offset="15">
+          <el-radio-group v-model="pcRadio">
+            <el-radio  label="未通过" ch></el-radio>
+            <el-radio label="通过"></el-radio>
+          </el-radio-group>
+        </el-col>
+      </el-row>
+      <el-row :gutter="20">
         <el-col :span="8">
           <span>设计单编号:</span>
-          <span>{{designProcedure.designId}}</span>
+          <span class="yl">{{designProcedure.designId}}</span>
         </el-col>
         <el-col :span="2" :offset="3">设计人
         </el-col>
-        <el-col :span="3" >
+        <el-col :span="3" class="inp">
           <el-input v-model="designProcedure.designer"></el-input>
         </el-col>
-        <el-radio-group v-model="pcRadio">
-          <el-radio  label="未通过" ch></el-radio>
-          <el-radio label="通过"></el-radio>
-        </el-radio-group>
       </el-row>
       <el-row :gutter="20">
         <el-col :span="8">
@@ -73,6 +78,7 @@
       <el-row :gutter="20">
         <el-table :data="details"
                   stripe
+                  :header-cell-style="{background:'#409EFF',color:'#FFFFFF'}"
                   ref="multipleTable"
                   style="width:100%">
           <el-table-column
@@ -158,7 +164,7 @@
     name: "processCheck",
     data() {
       return {
-        pcRadio:'pass',
+        pcRadio:'未通过',
         checkTime:'',
         dialogFormVisible:false,
         list:[],
@@ -221,6 +227,23 @@
       },
       //审核
       handleEdit(v1,v2,v3){
+        Date.prototype.Format = function (fmt) { // author: meizz
+          var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+          };
+          if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+          return fmt;
+        }
+        this.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
         this.axios.get("http://localhost:1217/enxin/m-design-procedure/queryProcedureById?id="+v3)
           .then((response)=>{
             this.details=response.data.list;
@@ -262,7 +285,7 @@
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
           return fmt;
         }
-        vm.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
+       // vm.checkTime = new Date().Format("yyyy-MM-dd hh:mm:ss");
         console.log(vm.checkTime)
       });
     },
@@ -273,6 +296,13 @@
 </script>
 
 <style scoped>
-
+  .inp >>>  .el-input__inner{
+    border: none;
+    border-bottom: 1px solid gray;
+    /*margin-left: -40px;*/
+    height: 25px !important;
+    width: 100px !important;
+    background-color: lightgoldenrodyellow;
+  }
 </style>
 
